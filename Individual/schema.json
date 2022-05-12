@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/product.schema.json",
+  "title": "Flight",
+  "description": "A plane flight from one destination to another",
+  "type": "object",
+  "properties": {
+    "flight_destination": {
+      "description": "The plane's destination",
+      "type": "string",
+      "maxLength": 20
+    },
+    "flight_number": {
+      "description": "The number of people's flight",
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 6
+    },
+    "airplane_type": {
+      "description": "The type of the arrived plane",
+      "type": "string",
+      "maxLength": 20
+    }
+  },
+  "required": [ "flight_destination", "flight_number", "airplane_type" ]
+}
