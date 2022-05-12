@@ -8,7 +8,6 @@ from jsonschema import validate
 import sys
 
 
-
 def get_flight():
     """
     Запросить данные о полёте
@@ -152,7 +151,7 @@ def main():
             flights = load_workers(file_name)
             try:
                 validate(instance=flights, schema=schema)
-            except jsonschema.exceptions.ValidationError as err:
+            except jsonschema.ValidationError as err:
                 err = "Given JSON data are InValid"
                 print(err)
             message = "Given JSON data are Valid"

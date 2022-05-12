@@ -1,22 +1,17 @@
 [
     {
-        "name": "Hqndskjx L.Q",
-        "post": "Nciuqnsm",
-        "year": 2021
+        "flight_destination": "DJsokjd",
+        "flight_number": "K1314",
+        "airplane_type": "Passenger"
     },
     {
-        "name": "Kojhq U.L",
-        "post": "Unqciuqskld",
-        "year": 2016
+        "flight_destination": "Imccqs",
+        "flight_number": "I4124",
+        "airplane_type": "Cargo"
     },
     {
-        "name": "Sdjkajvccsq K.K",
-        "post": "Sdjkjkcq",
-        "year": 2004
-    },
-    {
-        "name": "Wcodos H.F",
-        "post": "Andkj2q ",
-        "year": 1998
+        "flight_destination": "Jcmqks",
+        "flight_number": "JH412",
+        "airplane_type": "Military"
     }
 ]
