@@ -7,26 +7,26 @@ import sys
 from datetime import date
 
 
-def get_driver():
+def get_worker():
     """
-    Запросить данные о водителе.
+    Запросить данные о работнике.
     """
-    name = input("Фамилия и имя? ")
-    team = input("Команда? ")
-    year = int(input("Год вступления? "))
+    name = input("Фамилия и инициалы? ")
+    post = input("Должность? ")
+    year = int(input("Год поступления? "))
     # Создать словарь.
     return {
         'name': name,
-        'team': team,
+        'post': post,
         'year': year,
     }
 
 
-def display_drivers(staff):
+def display_workers(staff):
     """
-    Отобразить список водителей.
+    Отобразить список работников.
     """
-    # Проверить, что список не пуст.
+    # Проверить, что список работников не пуст.
     if staff:
         # Заголовок таблицы.
         line = '+-{}-+-{}-+-{}-+-{}-+'.format(
@@ -40,29 +40,29 @@ def display_drivers(staff):
             '| {:^4} | {:^30} | {:^20} | {:^8} |'.format(
                 "No",
                 "Ф.И.О.",
-                "Команда",
+                "Должность",
                 "Год"
             )
         )
         print(line)
         # Вывести данные о всех сотрудниках.
-        for idx, driver in enumerate(staff, 1):
+        for idx, worker in enumerate(staff, 1):
             print(
                 '| {:>4} | {:<30} | {:<20} | {:>8} |'.format(
                     idx,
-                    driver.get('name', ''),
-                    driver.get('team', ''),
-                    driver.get('year', 0)
+                    worker.get('name', ''),
+                    worker.get('post', ''),
+                    worker.get('year', 0)
                 )
             )
             print(line)
     else:
-        print("Список водителей пуст.")
+        print("Список работников пуст.")
 
 
-def select_drivers(staff, period):
+def select_workers(staff, period):
     """
-    Выбрать водителей с заданным стажем.
+    Выбрать работников с заданным стажем.
     """
     # Получить текущую дату.
     today = date.today()
@@ -71,24 +71,24 @@ def select_drivers(staff, period):
     for employee in staff:
         if today.year - employee.get('year', today.year) >= period:
             result.append(employee)
-    # Возвратить список выбранных водителей.
+    # Возвратить список выбранных работников.
     return result
 
 
-def save_drivers(file_name, staff):
+def save_workers(file_name, staff):
     """
-    Сохранить всех водителей в файл JSON.
+    Сохранить всех работников в файл JSON.
     """
     # Открыть файл с заданным именем для записи.
     with open(file_name, "w", encoding="utf-8") as fout:
         # Выполнить сериализацию данных в формат JSON.
         # Для поддержки кирилицы установим ensure_ascii=False
-        json.dump(staff, fout, ensure_ascii=True, indent=4)
+        json.dump(staff, fout, ensure_ascii=False, indent=4)
 
 
-def load_drivers(file_name):
+def load_workers(file_name):
     """
-    Загрузить всех водителей из файла JSON.
+    Загрузить всех работников из файла JSON.
     """
     # Открыть файл с заданным именем для чтения.
     with open(file_name, "r", encoding="utf-8") as fin:
@@ -99,8 +99,8 @@ def main():
     """
     Главная функция программы.
     """
-    # Список водителей.
-    drivers = []
+    # Список работников.
+    workers = []
     # Организовать бесконечный цикл запроса команд.
     while True:
         # Запросить команду из терминала.
@@ -110,44 +110,44 @@ def main():
             break
         elif command == "add":
             # Запросить данные о работнике.
-            driver = get_driver()
+            worker = get_worker()
             # Добавить словарь в список.
-            drivers.append(driver)
+            workers.append(worker)
             # Отсортировать список в случае необходимости.
-            if len(drivers) > 1:
-                drivers.sort(key=lambda item: item.get('name', ''))
+            if len(workers) > 1:
+                workers.sort(key=lambda item: item.get('name', ''))
         elif command == "list":
-            # Отобразить всех водителей.
-            display_drivers(drivers)
-        elif command.startswith("select"):
+            # Отобразить всех работников.
+            display_workers(workers)
+        elif command.startswith("select "):
             # Разбить команду на части для выделения стажа.
             parts = command.split(maxsplit=1)
             # Получить требуемый стаж.
             period = int(parts[1])
-            # Выбрать водителей с заданным стажем.
-            selected = select_drivers(drivers, period)
-            # Отобразить выбранных водителей.
-            display_drivers(selected)
-        elif command.startswith("save"):
+            # Выбрать работников с заданным стажем.
+            selected = select_workers(workers, period)
+            # Отобразить выбранных работников.
+            display_workers(selected)
+        elif command.startswith("save "):
             # Разбить команду на части для выделения имени файла.
             parts = command.split(maxsplit=1)
             # Получить имя файла.
             file_name = parts[1]
             # Сохранить данные в файл с заданным именем.
-            save_drivers(file_name, drivers)
-        elif command.startswith("load"):
+            save_workers(file_name, workers)
+        elif command.startswith("load "):
             # Разбить команду на части для выделения имени файла.
             parts = command.split(maxsplit=1)
             # Получить имя файла.
             file_name = parts[1]
             # Сохранить данные в файл с заданным именем.
-            drivers = load_drivers(file_name)
+            workers = load_workers(file_name)
         elif command == 'help':
             # Вывести справку о работе с программой.
             print("Список команд:\n")
-            print("add - добавить водителя;")
-            print("list - вывести список водителей;")
-            print("select <стаж> - запросить водителей со стажем;")
+            print("add - добавить работника;")
+            print("list - вывести список работников;")
+            print("select <стаж> - запросить работников со стажем;")
             print("help - отобразить справку;")
             print("load - загрузить данные из файла;")
             print("save - сохранить данные в файл;")
